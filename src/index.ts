@@ -1,5 +1,4 @@
-import { createUserUseCase } from "./app/useCases/create-user-useCase";
-import { signUp } from "./app/useCases/sign-up";
+import { SignUpUseCase } from "./app/useCases/SignUpUseCase";
 
 const user  = {
   name: "John Doe",
@@ -7,9 +6,7 @@ const user  = {
   password: "securepassword123"
 }
 
-const sign = signUp({
-  email: user.email,
-  password: user.password
-})
-console.log("Sign up successful:", sign); 
+const signUp = new SignUpUseCase();
+
+console.log("Sign up successful:", signUp.execute(user)); 
 
