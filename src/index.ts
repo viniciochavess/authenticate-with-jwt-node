@@ -1,8 +1,8 @@
-import { sign } from './jwt/sign';
-import { verifyJwt } from './jwt/verify';
+import { createUserUseCase } from "./app/useCases/create-user-useCase";
 
-const token = sign({ payload: { userId: 123, cargo:'admin' } });
-const verified = verifyJwt(token);
-
-console.log("Generated JWT:", token);
-console.log("Verified JWT:", verified);
+const newUser = createUserUseCase({
+  name: "John Doe",
+  email: "john.doe@example.com",
+  password: "securepassword123",
+});
+console.log("New user created:", newUser);
