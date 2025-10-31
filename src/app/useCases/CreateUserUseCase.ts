@@ -1,5 +1,5 @@
 import { uuidv7 } from "uuidv7";
-import { getUserJson } from "../../utils/get-user-json";
+import { readUserJson } from "../../utils/read-user-json";
 
 interface CreateUserDTO {
   email: string;
@@ -16,7 +16,7 @@ interface CreateUserResponse {
 
 export class CreateUserUseCase {
   execute(data: CreateUserDTO): CreateUserResponse {
-    const userJson = getUserJson();
+    const userJson = readUserJson();
     const user = {
       id: uuidv7(),
       email: data.email,

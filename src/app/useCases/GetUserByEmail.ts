@@ -1,5 +1,5 @@
 
-import { getUserJson } from "../../utils/get-user-json";
+import { readUserJson } from "../../utils/read-user-json";
 
 interface User {
   id: string;
@@ -14,7 +14,7 @@ interface GetUserByEmailResponse {
 
 export class GetUserByEmailUseCase {
   execute(email: string): GetUserByEmailResponse {
-    const userJson: User[] = getUserJson();
+    const userJson: User[] = readUserJson();
     const user = userJson.find((user) => user.email === email);
     return { user };
   }

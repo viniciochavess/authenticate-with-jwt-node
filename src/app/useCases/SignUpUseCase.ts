@@ -1,11 +1,21 @@
-import { compareSync } from "bcryptjs";
+import { uuidv7 } from "uuidv7";
+import { readUserJson } from "../../utils/read-user-json";
+import { hashSync } from "bcryptjs";
+import fs from "fs";
+import { saveUserJson } from "../../utils/save-user-json";
 
-import { sign } from "../../jwt/sign";
-import { getUserJson } from "../../utils/get-user-json";
-
-interface SignUpData {
+interface IRequest {
   email: string;
+  name: string;
   password: string;
+}
+
+interface IResponse {
+  user: {
+    id: string;
+    email: string;
+    name: string;
+  };
 }
 
 interface User {
@@ -16,29 +26,25 @@ interface User {
 }
 
 export class SignUpUseCase {
-  execute(data: SignUpData) {
-    const { email, password } = data;
-    const userJson: User[] = getUserJson();
+  execute(data: IRequest): IResponse {
+    const { email, name, password } = data;
+
+    const userJson: User[] = readUserJson();
     const userAlwaysExists = userJson.find((user) => user.email === email);
-
-    if (!userAlwaysExists) {
-      throw new Error("Email or password incorrect");
-    }
-
-    const passwordMatch = compareSync(password, userAlwaysExists.password);
-
-    if (!passwordMatch) {
-      throw new Error("Email or password incorrect");
-    }
-
-    const token = sign({ payload: { id: userAlwaysExists.id } });
-
-    return {
-      token,
-      user: {
-        id: userAlwaysExists.id,
-      },
+    const passwordHash = hashSync(password, 8);
+    const user = {
+      id: uuidv7(),
+      email,
+      name,
+      password: passwordHash,
     };
+    if (userAlwaysExists) {
+      throw new Error("User already exists");
+    }
+    userJson.push(user);
 
+    saveUserJson(userJson);
+
+    return { user };
   }
 }
