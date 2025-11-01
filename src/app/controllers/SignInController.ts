@@ -13,12 +13,17 @@ export class SignInController implements IController {
   async handle({ body }: IRequest): Promise<IResponse> {
     try {
       const { email, password } = shema.parse(body);
-      await this.userService.execute({ email, password });
+      const { user, token } = await this.userService.execute({ email, password });
 
       return {
         status: 200,
         body: {
-          message: "User signed in successfully",
+          message: {
+            user: {
+              id: user.id,
+            },
+            token,
+          },
         },
       };
     } catch (error) {
