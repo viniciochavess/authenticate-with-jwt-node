@@ -7,7 +7,7 @@ app.use(expres.json());
 app.use(authRouter);
 
 app.get("/ping", (req, res) => {
-  res.send("Hello World!");
+  res.send("pong");
 });
 
 app.listen(process.env.PORT!, () => {

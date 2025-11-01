@@ -5,7 +5,7 @@ import fs from "fs";
 import { saveUserJson } from "../../utils/save-user-json";
 import { UserAlreadyExistsError } from "../err/User-Already-exist-err";
 import { GetUserByEmailRepository } from "../repositories/GetUserByEmailRepository";
-import { CreateUserRepository } from "../repositories/CreateUserUseCaseRepository";
+import { CreateUserRepository } from "../repositories/CreateUserRepository";
 
 interface IRequest {
   email: string;

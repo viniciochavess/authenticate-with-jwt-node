@@ -1,7 +1,6 @@
 import { IController, IRequest, IResponse } from "../interface/IController";
 import { z } from "zod";
-import { CreateUserUseCase } from "../repositories/CreateUserUseCaseRepository";
-
+import { CreateUserRepository} from "../repositories/CreateUserRepository";
 const shema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
@@ -9,7 +8,7 @@ const shema = z.object({
 });
 
 export class CreateUserController implements IController {
-  constructor(readonly userService: CreateUserUseCase) {}
+  constructor(readonly userService: CreateUserRepository) {}
   async handle({ body }: IRequest): Promise<IResponse> {
     try {
       const { name, email, password } = shema.parse(body);
