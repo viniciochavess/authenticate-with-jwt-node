@@ -1,3 +1,4 @@
+import { GetUserByEmailUseCase } from "./app/useCases/GetUserByEmail";
 import { SignUpUseCase } from "./app/useCases/SignUpUseCase";
 
 const user = {
@@ -7,7 +8,8 @@ const user = {
 };
 
 try {
-  const signIn = new SignUpUseCase();
+  const userService = new GetUserByEmailUseCase();
+  const signIn = new SignUpUseCase(userService);
   signIn.execute(user);
   console.log("User signed in successfully.");
 } catch (err) {
