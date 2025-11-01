@@ -15,30 +15,37 @@ interface User {
   name: string;
   password: string;
 }
+interface IResponse {
+  token: string;
+  user: {
+    id: string;
+  };
+}
 
 export class SignInUseCase {
-  execute(data: SignUpData) {
+  execute(data: SignUpData): IResponse {
     const { email, password } = data;
     const userJson: User[] = readUserJson();
     const userAlwaysExists = userJson.find((user) => user.email === email);
 
-    if (!userAlwaysExists) {
-      throw new Error("User does not exist");
-    }
+      if (!userAlwaysExists) {
+        throw new Error("User does not exist");
+      }
 
-    const passwordMatch = compareSync(password, userAlwaysExists.password);
+      const passwordMatch = compareSync(password, userAlwaysExists.password);
 
-    if (!passwordMatch) {
-      throw new Error("Password incorrect");
-    }
+      if (!passwordMatch) {
+        throw new Error("Password incorrect");
+      }
 
-    const token = sign({ payload: { id: userAlwaysExists.id } });
-
-    return {
-      token,
-      user: {
-        id: userAlwaysExists.id,
-      },
-    };
+      const token = sign({ payload: { id: userAlwaysExists.id } });
+      
+      return {
+        token,
+        user: {
+          id: userAlwaysExists.id,
+        },
+      };
+ 
   }
 }

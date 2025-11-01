@@ -1,3 +1,4 @@
+import { SignInUseCase } from "./app/useCases/SignInUseCase";
 import { SignUpUseCase } from "./app/useCases/SignUpUseCase";
 
 const user = {
@@ -7,9 +8,9 @@ const user = {
 };
 
 try {
-  const signIn = new SignUpUseCase();
-  signIn.execute(user);
-  console.log("User signed in successfully.");
+  const signIn = new SignInUseCase();
+  const { token, user: { id } } =   signIn.execute(user);
+  console.log("User signed in successfully.", { token, id });
 } catch (err) {
   if (err instanceof Error) {
     console.error("Error during sign in:", err.message);
