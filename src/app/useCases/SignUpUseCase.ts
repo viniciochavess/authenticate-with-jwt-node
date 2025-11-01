@@ -3,6 +3,9 @@ import { readUserJson } from "../../utils/read-user-json";
 import { hashSync } from "bcryptjs";
 import fs from "fs";
 import { saveUserJson } from "../../utils/save-user-json";
+import { UserAlreadyExistsError } from "../err/User-Already-exist-err";
+import { GetUserByEmailRepository } from "../repositories/GetUserByEmailRepository";
+import { CreateUserRepository } from "../repositories/CreateUserUseCaseRepository";
 
 interface IRequest {
   email: string;
@@ -26,25 +29,27 @@ interface User {
 }
 
 export class SignUpUseCase {
+  constructor(
+    readonly userServiceGetEmail: GetUserByEmailRepository,
+    readonly createUser: CreateUserRepository
+  ) {}
   execute(data: IRequest): IResponse {
     const { email, name, password } = data;
 
-    const userJson: User[] = readUserJson();
-    const userAlwaysExists = userJson.find((user) => user.email === email);
+ 
+    const { user: userAlwaysExists } = this.userServiceGetEmail.execute(email);
     const passwordHash = hashSync(password, 8);
-    const user = {
-      id: uuidv7(),
+
+    if (userAlwaysExists) {
+      throw new UserAlreadyExistsError();
+    }
+
+    const { user } = this.createUser.execute({
       email,
       name,
       password: passwordHash,
-    };
-    if (userAlwaysExists) {
-      throw new Error("User already exists");
-    }
-    userJson.push(user);
-
-    saveUserJson(userJson);
-
+    });
+    
     return { user };
   }
 }

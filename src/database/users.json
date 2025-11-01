@@ -1,8 +1,8 @@
 [
   {
-    "id": "019a3b88-a18b-7c7b-88db-c3b49082a724",
-    "email": "john.doe@example.com",
+    "id": "019a3ce3-9e7d-72f5-a480-3195d1fa2775",
     "name": "John Doe",
-    "password": "$2b$08$d5On5OzhXlXqMgpFF.OGEOzynA0B2uJWniVUQWLfzwneJgTTxjoD."
+    "email": "john.doe@example.com",
+    "password": "$2b$08$1x4DL6B0wAWMkd4l5vl4P..k52og5KMONvX1DPBQwpaqQjBZ6NukC"
   }
 ]

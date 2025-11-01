@@ -1,8 +1,7 @@
 import { compareSync } from "bcryptjs";
-
 import { sign } from "../../jwt/sign";
 import { readUserJson } from "../../utils/read-user-json";
-import { error } from "console";
+import { InvalidCredentialsError } from "../err/Invalid-credentials-err";
 
 interface SignUpData {
   email: string;
@@ -23,20 +22,19 @@ interface IResponse {
 }
 
 export class SignInUseCase {
-  execute(data: SignUpData): IResponse {
-    const { email, password } = data;
+  execute({ email, password }: SignUpData) {
     const userJson: User[] = readUserJson();
     const userAlwaysExists = userJson.find((user) => user.email === email);
 
-      if (!userAlwaysExists) {
-        throw new Error("User does not exist");
-      }
+    if (!userAlwaysExists) {
+      throw new InvalidCredentialsError();
+    }
 
       const passwordMatch = compareSync(password, userAlwaysExists.password);
 
-      if (!passwordMatch) {
-        throw new Error("Password incorrect");
-      }
+    if (!passwordMatch) {
+      throw new InvalidCredentialsError();
+    }
 
       const token = sign({ payload: { id: userAlwaysExists.id } });
       
