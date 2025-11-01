@@ -1,5 +1,6 @@
 import { uuidv7 } from "uuidv7";
 import { readUserJson } from "../../utils/read-user-json";
+import { saveUserJson } from "../../utils/save-user-json";
 
 interface CreateUserDTO {
   email: string;
@@ -14,21 +15,22 @@ interface CreateUserResponse {
   };
 }
 
-export class CreateUserUseCase {
-  execute(data: CreateUserDTO): CreateUserResponse {
+export class CreateUserRepository {
+  execute({email,name,password}: CreateUserDTO): CreateUserResponse {
     const userJson = readUserJson();
     const user = {
       id: uuidv7(),
-      email: data.email,
-      name: data.name,
-      password: data.password,
+      email,
+      name,
+      password: password,
     };
     userJson.push({
       id: user.id,
-      name: data.name,
-      email: data.email,
-      password: data.password,
+      name,
+      email,
+      password,
     });
+    saveUserJson(userJson);
     return { user };
   }
 }

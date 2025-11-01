@@ -12,7 +12,7 @@ interface GetUserByEmailResponse {
   user?: User;
 }
 
-export class GetUserByEmailUseCase {
+export class GetUserByEmailRepository {
   execute(email: string): GetUserByEmailResponse {
     const userJson: User[] = readUserJson();
     const user = userJson.find((user) => user.email === email);

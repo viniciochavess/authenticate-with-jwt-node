@@ -1,8 +1,6 @@
 import { compareSync } from "bcryptjs";
-
 import { sign } from "../../jwt/sign";
 import { readUserJson } from "../../utils/read-user-json";
-import { error } from "console";
 import { InvalidCredentialsError } from "../err/Invalid-credentials-err";
 
 interface SignUpData {

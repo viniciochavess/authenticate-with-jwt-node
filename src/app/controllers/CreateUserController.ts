@@ -1,6 +1,6 @@
 import { IController, IRequest, IResponse } from "../interface/IController";
 import { z } from "zod";
-import { CreateUserUseCase } from "../useCases/CreateUserUseCase";
+import { CreateUserUseCase } from "../repositories/CreateUserUseCaseRepository";
 
 const shema = z.object({
   name: z.string().min(3),
