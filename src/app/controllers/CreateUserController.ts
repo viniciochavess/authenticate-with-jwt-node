@@ -1,6 +1,9 @@
 import { IController, IRequest, IResponse } from "../interface/IController";
 import { z } from "zod";
 import { CreateUserRepository} from "../repositories/CreateUserRepository";
+import { Sign } from "crypto";
+import { SignUpUseCase } from "../useCases/SignUpUseCase";
+import { UserAlreadyExistsError } from "../err/User-Already-exist-err";
 const shema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
@@ -8,7 +11,7 @@ const shema = z.object({
 });
 
 export class CreateUserController implements IController {
-  constructor(readonly userService: CreateUserRepository) {}
+  constructor(readonly userService: SignUpUseCase) {}
   async handle({ body }: IRequest): Promise<IResponse> {
     try {
       const { name, email, password } = shema.parse(body);
@@ -17,7 +20,7 @@ export class CreateUserController implements IController {
         email,
         password,
       });
-
+      
       return {
         status: 200,
         body: {
@@ -31,6 +34,14 @@ export class CreateUserController implements IController {
           body: {
             message: "Validation error",
             issues: error.issues,
+          },
+        };
+      }
+      if (error instanceof UserAlreadyExistsError) {
+        return {
+          status: 409,
+          body: {
+            message: "User already exists",
           },
         };
       }

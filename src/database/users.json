@@ -4,5 +4,11 @@
     "name": "John Doe",
     "email": "john.doe@example.com",
     "password": "$2b$08$1x4DL6B0wAWMkd4l5vl4P..k52og5KMONvX1DPBQwpaqQjBZ6NukC"
+  },
+  {
+    "id": "019a4ea1-85a1-7b50-8fda-d2f0677786ed",
+    "name": "johndoe",
+    "email": "john.doe1@example.com",
+    "password": "$2b$08$GsbgaT.Q3ab5wKzHhXZOU.jWv1YJ4ncIQc2.HYDSTL3V8Sb19Pbue"
   }
 ]

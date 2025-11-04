@@ -36,7 +36,6 @@ export class SignUpUseCase {
   execute(data: IRequest): IResponse {
     const { email, name, password } = data;
 
- 
     const { user: userAlwaysExists } = this.userServiceGetEmail.execute(email);
     const passwordHash = hashSync(password, 8);
 
@@ -49,7 +48,7 @@ export class SignUpUseCase {
       name,
       password: passwordHash,
     });
-    
+
     return { user };
   }
 }
