@@ -1,5 +1,6 @@
 export interface IRequest {
   body: Record<string, any>;
+  params: Record<string, string>;
 }
 
 export interface IResponse {
@@ -8,5 +9,5 @@ export interface IResponse {
 }
 
 export interface IController {
-  handle({ body }: IRequest): Promise<IResponse>;
+  handle({ body, params }: IRequest): Promise<IResponse>;
 }

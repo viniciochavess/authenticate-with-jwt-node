@@ -1,12 +1,14 @@
 import expres from "express";
 import { authRouter } from "./routes/auth";
 import { userRouter } from "./routes/user";
+import { privateRouter } from "./routes/private";
 const app = expres();
 
 app.use(expres.json());
 
 app.use(authRouter);
 app.use(userRouter);
+app.use(privateRouter);
 
 app.get("/ping", (req, res) => {
   res.send("pong");

@@ -1,7 +1,5 @@
 import { IController, IRequest, IResponse } from "../interface/IController";
 import { z } from "zod";
-import { CreateUserRepository} from "../repositories/CreateUserRepository";
-import { Sign } from "crypto";
 import { SignUpUseCase } from "../useCases/SignUpUseCase";
 import { UserAlreadyExistsError } from "../err/User-Already-exist-err";
 const shema = z.object({

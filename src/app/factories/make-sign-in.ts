@@ -1,9 +1,9 @@
-import { CreateUserRepository } from "../repositories/CreateUserRepository";
-import { GetUserByEmailRepository } from "../repositories/GetUserByEmailRepository";
+import { SignInController } from "../controllers/SignInController";
 import { SignInUseCase } from "../useCases/SignInUseCase";
 
 
 export function makeSignIn() {
     const signInUseCase = new SignInUseCase();
-    return signInUseCase;
+    const controller = new SignInController(signInUseCase);
+    return controller;
 }
