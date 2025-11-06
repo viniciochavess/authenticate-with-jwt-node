@@ -3,14 +3,21 @@ import { IMiddleware } from "../interface/IMiddleware";
 
 export function routerMiddleware(middleware: IMiddleware) {
   return async (req: Request, res: Response, next: Function) => {
-    const { status, body } = await middleware.handle({
+    const result = await middleware.handle({
       headers: req.headers as Record<string, string>,
     });
-  
-    if (status === 200) {
-      next();
-    } else {
-      res.status(401).json(body);
+
+    if ("status" in result && "body" in result) {
+      const { status, body } = result;
+      if (status === 200) {
+        return next();
+      }
+
+      return res.status(status).json(body);
+    }
+    if ("data" in result) {
+      req.body = { ...req.body, ...result.data };
+      return next();
     }
   };
 }
