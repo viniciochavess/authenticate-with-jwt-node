@@ -32,8 +32,8 @@ export class MiddlewarePrivate implements IMiddleware {
 
     return {
       status: 200,
-      body: {
-        message: "Authorized",
+      data: {
+        accountId: "123",
       },
     };
   }

@@ -9,14 +9,11 @@ export function routerMiddleware(middleware: IMiddleware) {
 
     if ("status" in result && "body" in result) {
       const { status, body } = result;
-      if (status === 200) {
-        return next();
-      }
 
       return res.status(status).json(body);
     }
     if ("data" in result) {
-      req.body = { ...req.body, ...result.data };
+      req.metadata = { ...req.metadata, ...result.data };
       return next();
     }
   };

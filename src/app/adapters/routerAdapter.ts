@@ -3,7 +3,7 @@ import { IController } from "../interface/IController";
 
 export function routerAdapter(controller: IController) {
   return async (req: Request, res: Response) => {
-    const { status, body } = await controller.handle({ body: req.body , params: req.params });
+    const { status, body } = await controller.handle({ body: req.body , params: req.params, accountId: undefined });
     res.status(status).json(body);
   };
 }

@@ -9,6 +9,7 @@ privateRouter.get(
   routerMiddleware(makePrivateMiddleware()),
   (req, res) => {
     try {
+      console.log(req.metadata);
       res.status(200).json({ message: "This is a private route" });
     } catch (error) {
         if( error instanceof InvalidTokenJwtError){
